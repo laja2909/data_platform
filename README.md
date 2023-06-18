@@ -1,5 +1,11 @@
 Data platform for own data etl jobs.
 
+environments:
+-dev
+-test
+-prod
+
+
 Tools used:
 Vagrant (tells which virtual machine to build)
 Virtualbox (Virtual machine host, containing the vm)
@@ -13,6 +19,10 @@ Structure is as follows:
 - Transformation
 - Reporting
 
+2. database (database changes here)
+-landing
+-transformation
+-reporting
 2. architecture (architecture configs here)
 
 3. tools (python classes)
