@@ -1,7 +1,7 @@
 
 #default airflow machine
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
   
   config.vm.provider "virtualbox" do |vb|
     config.vm.hostname = "airflow-vm"
@@ -12,3 +12,6 @@ Vagrant.configure("2") do |config|
   config.vm.network "public_network", ip: "192.168.1.200"
   config.vm.synced_folder "./shared", "/opt/airflow"
 end
+
+
+#config.vm.box = "ubuntu/xenial64"
