@@ -10,8 +10,6 @@ Vagrant.configure("2") do |config|
   end 
   
   config.vm.network "public_network", ip: "192.168.1.200"
-  config.vm.synced_folder "./shared", "/opt/airflow"
+  config.vm.synced_folder "./shared/airflow", "/opt/airflow"
 end
 
-
-#config.vm.box = "ubuntu/xenial64"
