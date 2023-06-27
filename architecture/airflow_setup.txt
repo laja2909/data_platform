@@ -48,3 +48,4 @@ http://192.168.1.200:8080
 WARNING - OSError while attempting to symlink the latest log directory
 ---check if all services are needed: redis, triggerer etc. (yaml file)
 ---make a shell script to airflow to vagrant file. check vagrant shell script in google search
+---check why venvs is not working when importing airflow modules. Has to use other python environments
