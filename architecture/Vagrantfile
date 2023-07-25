@@ -1,15 +1,15 @@
 #default airflow machine
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
-  
-  config.vm.provider "virtualbox" do |vb|
-    config.vm.hostname = "airflow-vm"
+  config.vm.network "public_network", ip: "192.168.1.200"
+  config.vm.hostname = "airflow-vm"
+  config.vm.synced_folder "./shared/airflow_docker", "/opt/airflow", :mount_options => ['dmode=777','fmode=777']
+
+  config.vm.provider "virtualbox" do |vb|  
     vb.memory = "8192"
     vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] #disable log files
   end 
-  
-  config.vm.network "public_network", ip: "192.168.1.200"
-  config.vm.synced_folder "./shared/airflow", "/opt/airflow"
+
 end
 
 
