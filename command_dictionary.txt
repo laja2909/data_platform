@@ -16,3 +16,5 @@ sudo docker compose down -v  -- to stop airflow docker and remove named volumes
 
 3. Git
 
+4. Shell
+
