@@ -1,0 +1,20 @@
+1. Vagrant
+--Type commands in vagrant file path
+
+Vagrant up --to build vagrant machine
+Vagrant halt -- to stop vagrant machine
+Vagrant ssh -- to access vagrant machine
+--ctrl+D -- to exit vagrant ssh
+
+2. Docker
+
+sudo docker ps -- to check running docker containers
+sudo docker compose up airflow-init -- to initialize airflow via docker compose yaml file
+sudo docker compose up -- to start initialised airflow
+sudo docker compose down -v  -- to stop airflow docker and remove named volumes
+
+
+3. Git
+
+4. Shell
+
