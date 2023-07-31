@@ -7,8 +7,6 @@ Vagrant.configure("2") do |config|
         :box_version => "20210125.0.0",
         :ip => "192.168.33.10",
         :provision_file => File.join(File.dirname(__FILE__), "initialize_host.sh"),
-        #:host_port => "2200",
-        #:guest_port => "2200",
         :sync_host => "../",
         :sync_guest => "/opt/data_platform"
 
@@ -19,8 +17,6 @@ Vagrant.configure("2") do |config|
         :box_version => "20210125.0.0",
         :ip => "192.168.33.20",
         :provision_file =>File.join(File.dirname(__FILE__), "initialize_airflow.sh")
-        #:host_port => "8080",
-        #:guest_port => "8080"
       },
       {
         :hostname => "db",
@@ -28,38 +24,29 @@ Vagrant.configure("2") do |config|
         :box_version => "20210125.0.0",
         :ip => "192.168.33.30",
         :provision_file =>File.join(File.dirname(__FILE__), "initialize_db.sh")
-        #:host_port => "2201",
-        #:guest_port => "2201"
 
       }
     ]
   
   servers.each do |machine|
     config.vm.define machine[:hostname] do |node|
-      node.vm.provision :shell, inline: 'echo boxname: ' + machine[:hostname] #comment
       node.vbguest.auto_update = false
+      node.vm.boot_timeout = 600
   
       #provision the box
       provision_filename = machine[:provision_file]
-      node.vm.provision "shell", run: "always", inline: "echo #{provision_filename}" #comment
       if File.exists?(provision_filename) then
-        node.vm.provision "shell", run: "always", inline: "echo +++exists+++" # comment
-        node.vm.provision "shell", run: "always", :path => provision_filename
-      else
-        node.vm.provision "shell", run: "always", inline: "echo PROVISION FILE DOES NOT EXIST!" #comment
+        node.vm.provision "shell", :path => provision_filename
       end
       
       node.vm.box = machine[:box]
       node.vm.box_version = machine[:box_version]
       node.vm.hostname = machine[:hostname]
       node.vm.network "private_network", ip: machine[:ip]
-      #node.vm.network "forwarded_port", guest: machine[:guest_port], host: machine[:host_port], auto_correct: true
       
       if machine.has_key?(:sync_guest) then
-        node.vm.provision "shell", run: "always", inline: "echo syncing folder" #comment
         node.vm.synced_folder machine[:sync_host], machine[:sync_guest]
       else
-        node.vm.provision "shell", run: "always", inline: "echo No synced folders" #comment
         node.vm.synced_folder '.', '/vagrant', disabled: true
       end
 
