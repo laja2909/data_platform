@@ -29,8 +29,13 @@ git branch -m old-name new-name # to change the name of the branch
 git fetch --prune # to remove deleted branches from the list of branches
 
 4. Ansible
+# To test that ansible can connect to other vms
+ansible all --key-file ~/.ssh/id_rsa -i inventory -m ping # ansible all = ansible command to all vms; --key-file ~/.ssh/id_rsa = using ssh key that we generated; -i inventory = use inventory file to find vms. -m ping = use module ping
 
 5. Shell
+cd  # to move between directories, use ".." to go parent
+ls -a # show all directories and files
+sudo systemctl restart <service> # to restart service
 
 
 

@@ -43,9 +43,10 @@ Vagrant.configure("2") do |config|
       node.vm.box_version = machine[:box_version]
       node.vm.hostname = machine[:hostname]
       node.vm.network "private_network", ip: machine[:ip]
-      
+      #node.vm.network "forwarded port", guest: machine[:guest_port], host: machine[:host_port]
+
       if machine.has_key?(:sync_guest) then
-        node.vm.synced_folder machine[:sync_host], machine[:sync_guest]
+        node.vm.synced_folder machine[:sync_host], machine[:sync_guest], mount_options: ["fmode=600", "dmode=600"]
       else
         node.vm.synced_folder '.', '/vagrant', disabled: true
       end
