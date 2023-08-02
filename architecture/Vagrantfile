@@ -1,37 +1,66 @@
-#default airflow machine
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
-  config.vm.network "public_network", ip: "192.168.1.200"
-  config.vm.hostname = "airflow-vm"
-  config.vm.synced_folder "./shared/airflow_docker", "/opt/airflow", :mount_options => ['dmode=777','fmode=777']
+  
+  servers=[
+      {
+        :hostname => "host",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
+        :ip => "192.168.33.10",
+        :provision_file => File.join(File.dirname(__FILE__), "initialize_host.sh"),
+        :sync_host => "../",
+        :sync_guest => "/opt/data_platform"
 
-  config.vm.provider "virtualbox" do |vb|  
-    vb.memory = "8192"
-    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ] #disable log files
-  end 
+      },
+      {
+        :hostname => "airflow",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
+        :ip => "192.168.33.20",
+        :provision_file =>File.join(File.dirname(__FILE__), "initialize_airflow.sh")
+      },
+      {
+        :hostname => "db",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
+        :ip => "192.168.33.30",
+        :provision_file =>File.join(File.dirname(__FILE__), "initialize_db.sh")
 
-end
+      }
+    ]
+  
+  servers.each do |machine|
+    config.vm.define machine[:hostname] do |node|
+      node.vbguest.auto_update = false
+      node.vm.boot_timeout = 600
+  
+      #provision the box
+      provision_filename = machine[:provision_file]
+      if File.exists?(provision_filename) then
+        node.vm.provision "shell", :path => provision_filename
+      end
+      
+      node.vm.box = machine[:box]
+      #node.vm.box_version = machine[:box_version]
+      node.vm.hostname = machine[:hostname]
+      node.vm.network "private_network", ip: machine[:ip]
+      #node.vm.network "forwarded port", guest: machine[:guest_port], host: machine[:host_port]
 
+      if machine.has_key?(:sync_guest) then
+        node.vm.synced_folder machine[:sync_host], machine[:sync_guest], owner: "vagrant", group: "vagrant", mount_options: ["fmode=700", "dmode=700"]
+      else
+        node.vm.synced_folder '.', '/vagrant', disabled: true
+      end
 
-
-=begin
-Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
-    vb.cpus = 2
+      node.vm.provider :virtualbox do |vb|
+        vb.memory = "4096"
+        vb.cpus = 2
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        #vb.gui = true
+      end
+    end
   end
-
-  config.vm.network "private_network", ip: "192.168.33.10"
-
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get install -y docker.io
-    sudo usermod -aG docker vagrant
-
-    sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-  SHELL
 end
-=end
-

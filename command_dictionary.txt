@@ -1,10 +1,11 @@
 1. Vagrant
---Type commands in vagrant file path
+# Type commands in vagrant file path
 
-Vagrant up --to build vagrant machine
-Vagrant halt -- to stop vagrant machine
-Vagrant ssh -- to access vagrant machine
---ctrl+D -- to exit vagrant ssh
+Vagrant up # to build vagrant machine
+Vagrant halt # to stop vagrant machine
+Vagrant ssh # to access vagrant machine
+# ctrl+D to exit vagrant ssh
+Vagrant destroy # to destroy vagrant vm
 
 2. Docker
 
@@ -16,5 +17,28 @@ sudo docker compose down -v  -- to stop airflow docker and remove named volumes
 
 3. Git
 
-4. Shell
+git status # check status
+git checkout [branch] # to change to branch
+git add # to add changes to stage level. If "." is added after add, all changes are staged
+git commit -m "comment" # to make a commit
+git push <remote> <branch> # to upload local repo to remote. 
+git pull <remote> # to fetch and download content from a remote repository and immediately update the local repository to match that content
+git branch # to check branch list
+git branch -D <branch> # to delete branch
+git branch -m old-name new-name # to change the name of the branch
+git fetch --prune # to remove deleted branches from the list of branches
+
+4. Ansible
+# To test that ansible can connect to other vms
+ansible all --key-file ~/.ssh/id_rsa -i inventory -m ping # ansible all = ansible command to all vms; --key-file ~/.ssh/id_rsa = using ssh key that we generated; -i inventory = use inventory file to find vms. -m ping = use module ping
+##if ansible.cfg is defined with ssh key path, then just:
+ansible all -m ping
+
+
+5. Shell
+cd  # to move between directories, use ".." to go parent
+ls -a # show all directories and files
+sudo systemctl restart <service> # to restart service
+
+
 
