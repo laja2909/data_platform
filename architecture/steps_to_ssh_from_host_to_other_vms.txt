@@ -1,5 +1,6 @@
 1. create new ssh-key in host
 ssh-keygen -C "ansible" # creates ssh key named ansible
+# enter file name as full path: /home/vagrant/.ssh/ansible
 hit enter couple of time, do not set passphrase
 2. Go to other vm and open /etc/ssh/sshd_config (for ubuntu)
 sudo nano /etc/ssh/sshd_config
@@ -9,7 +10,7 @@ no -> yes
 5. restart ssh
 sudo systemctl restart sshd
 6. log to host and copy generated key to other machines
-ssh-copy-id -i vagrant@[ip-address of other machine]
+ssh-copy-id -i ~/.ssh/ansible.pub vagrant@[ip-address of other machine]
 --it asks a password so type vagrant default password and hit enter
 7. log to other machine and open config file again
 sudo nano /etc/ssh/sshd_config
@@ -19,7 +20,7 @@ yes->no
 sudo systemctl restart sshd
 10. log to host
 11. now you should be able to ssh from host to other machines via ssh
-ssh vagrant@[ip-address of other machine]
+ssh -i ~/.ssh/ansible vagrant@[ip-address of other machine]
 
 ##TO do
 

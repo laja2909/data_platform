@@ -8,7 +8,7 @@ mkdir ansible
 cd ansible
 5. create inventory file (defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate)
 nano inventory
-6. create ansible config file
+6. create ansible config file (for using this we can create more nicer looking commands (no need to define ssh key path etc.))
 nano ansible.cfg
 
 ## To do

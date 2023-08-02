@@ -31,6 +31,9 @@ git fetch --prune # to remove deleted branches from the list of branches
 4. Ansible
 # To test that ansible can connect to other vms
 ansible all --key-file ~/.ssh/id_rsa -i inventory -m ping # ansible all = ansible command to all vms; --key-file ~/.ssh/id_rsa = using ssh key that we generated; -i inventory = use inventory file to find vms. -m ping = use module ping
+##if ansible.cfg is defined with ssh key path, then just:
+ansible all -m ping
+
 
 5. Shell
 cd  # to move between directories, use ".." to go parent

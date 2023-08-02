@@ -3,8 +3,9 @@ Vagrant.configure("2") do |config|
   servers=[
       {
         :hostname => "host",
-        :box => "ubuntu/focal64",
-        :box_version => "20210125.0.0",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
         :ip => "192.168.33.10",
         :provision_file => File.join(File.dirname(__FILE__), "initialize_host.sh"),
         :sync_host => "../",
@@ -13,15 +14,17 @@ Vagrant.configure("2") do |config|
       },
       {
         :hostname => "airflow",
-        :box => "ubuntu/focal64",
-        :box_version => "20210125.0.0",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
         :ip => "192.168.33.20",
         :provision_file =>File.join(File.dirname(__FILE__), "initialize_airflow.sh")
       },
       {
         :hostname => "db",
-        :box => "ubuntu/focal64",
-        :box_version => "20210125.0.0",
+        :box => "ubuntu/bionic64",
+        #:box => "ubuntu/focal64",
+        #:box_version => "20210125.0.0",
         :ip => "192.168.33.30",
         :provision_file =>File.join(File.dirname(__FILE__), "initialize_db.sh")
 
@@ -40,13 +43,13 @@ Vagrant.configure("2") do |config|
       end
       
       node.vm.box = machine[:box]
-      node.vm.box_version = machine[:box_version]
+      #node.vm.box_version = machine[:box_version]
       node.vm.hostname = machine[:hostname]
       node.vm.network "private_network", ip: machine[:ip]
       #node.vm.network "forwarded port", guest: machine[:guest_port], host: machine[:host_port]
 
       if machine.has_key?(:sync_guest) then
-        node.vm.synced_folder machine[:sync_host], machine[:sync_guest], mount_options: ["fmode=600", "dmode=600"]
+        node.vm.synced_folder machine[:sync_host], machine[:sync_guest], owner: "vagrant", group: "vagrant", mount_options: ["fmode=700", "dmode=700"]
       else
         node.vm.synced_folder '.', '/vagrant', disabled: true
       end
@@ -56,89 +59,8 @@ Vagrant.configure("2") do |config|
         vb.cpus = 2
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        #vb.gui = true
       end
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-=begin
-Vagrant.configure("2") do |config|
-  #config.vm.provision "shell", inline: "echo Hello" #will run commands on all machines in this file
-
-  #ansible-host machine
-  config.vm.define "host" do |host|
-    host.vm.box = "ubuntu/focal64"
-    host.vm.box_version = "20210125.0.0"
-	  host.vm.network "private_network", ip: "192.168.33.22"#Set static IP
-	  host.vm.provider "virtualbox" do |vb| #Set Memory and CPUs
-      vb.memory = "4096"
-      vb.cpus = 2
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-    end 
-  end
-
-  config.vm.define "db01" do |db01|#VM No'2
-    db01.vm.box = "geerlingguy/centos7"#Setting machine type
-	db01.vm.network "private_network", ip: "192.168.33.23"#Set static IP
-	db01.vm.provider "virtualbox" do |vb| #Set Memory and CPUs
-    vb.memory = "1024"
-	vb.cpus = 2
-   end
-   config.vm.provision "shell", inline: <<-SHELL
-     yum install httpd wget unzip -y
-	 systemctl start httpd
-	 systemctl enable httpd
-	 cd /tmp/
-	 wget https://www.tooplate.com/zip-templates/2119_gymso_fitness.zip
-	 unzip -o 2119_gymso_fitness.zip
-	 cp -r 2119_gymso_fitness/* /var/www/html/
-	 systemctl restart httpd
-   SHELL
-  end
-end
-
-=end
-
-
-=begin
-#default airflow machine
-Vagrant.configure("2") do |config|
-
-  config.vm.provider "virtualbox" do |vb|  
-    vb.memory = "8192"
-    vb.cpus = 2
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-  end
-
-  config.vm.synced_folder "../", "/opt/data_platform/zero"
-
-  config.vm.box = "ubuntu/focal64"
-  config.vm.box_version = "20210125.0.0"
-
-  config.vm.boot_timeout = 600
-
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-
-  config.vm.provision "shell", run: "always", inline:"cd /opt/data_platform/zero; sudo sh architecture/initialize.sh"
-
-  config.vbguest.auto_update = false
-
-end
-=end
-
-
-
-
