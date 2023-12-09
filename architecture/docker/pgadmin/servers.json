@@ -4,31 +4,11 @@
         "Name": "Platform",
         "Port": 5432,
         "Username": "admin",
-        "Group": "DEV",
         "Host": "postgres",
+        "Group": "Servers",
         "SSLMode": "prefer",
         "MaintenanceDB": "sandbox",
-        "Comment": "Development environment"
-      },
-      "2": {
-        "Name": "Platform",
-        "Port": 5432,
-        "Username": "admin",
-        "Group": "TEST",
-        "Host": "postgres",
-        "SSLMode": "prefer",
-        "MaintenanceDB": "sandbox",
-        "Comment": "Development environment"
-      },
-      "3": {
-        "Name": "Platform",
-        "Port": 5432,
-        "Username": "admin",
-        "Group": "PROD",
-        "Host": "postgres",
-        "SSLMode": "prefer",
-        "MaintenanceDB": "sandbox",
-        "Comment": "Development environment"
+        "Comment": "Data platform"
       }
     }
   }
