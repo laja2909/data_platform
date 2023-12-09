@@ -1,0 +1,14 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "Platform",
+        "Port": 5432,
+        "Username": "test-user",
+        "Group": "DEV",
+        "Host": "postgres",
+        "SSLMode": "prefer",
+        "MaintenanceDB": "sandbox",
+        "Comment": "Development environment"
+      }
+    }
+  }
