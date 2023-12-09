@@ -9,6 +9,26 @@
         "SSLMode": "prefer",
         "MaintenanceDB": "sandbox",
         "Comment": "Development environment"
+      },
+      "2": {
+        "Name": "Platform",
+        "Port": 5432,
+        "Username": "test-user",
+        "Group": "TEST",
+        "Host": "postgres",
+        "SSLMode": "prefer",
+        "MaintenanceDB": "sandbox",
+        "Comment": "Development environment"
+      },
+      "3": {
+        "Name": "Platform",
+        "Port": 5432,
+        "Username": "test-user",
+        "Group": "PROD",
+        "Host": "postgres",
+        "SSLMode": "prefer",
+        "MaintenanceDB": "sandbox",
+        "Comment": "Development environment"
       }
     }
   }
