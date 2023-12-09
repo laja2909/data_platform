@@ -2,7 +2,7 @@
     "Servers": {
       "1": {
         "Name": "Platform",
-        "Port": 5432,
+        "Port": 5431,
         "Username": "admin",
         "Host": "postgres",
         "Group": "Servers",
