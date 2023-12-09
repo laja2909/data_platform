@@ -3,7 +3,7 @@
       "1": {
         "Name": "Platform",
         "Port": 5432,
-        "Username": "test-user",
+        "Username": "admin",
         "Group": "DEV",
         "Host": "postgres",
         "SSLMode": "prefer",
@@ -13,7 +13,7 @@
       "2": {
         "Name": "Platform",
         "Port": 5432,
-        "Username": "test-user",
+        "Username": "admin",
         "Group": "TEST",
         "Host": "postgres",
         "SSLMode": "prefer",
@@ -23,7 +23,7 @@
       "3": {
         "Name": "Platform",
         "Port": 5432,
-        "Username": "test-user",
+        "Username": "admin",
         "Group": "PROD",
         "Host": "postgres",
         "SSLMode": "prefer",
