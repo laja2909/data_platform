@@ -5,8 +5,18 @@
             "server": "localhost",
             "port": 5431,
             "driver": "PostgreSQL",
-            "name": "Platform",
+            "name": "Sandbox",
             "group": "Servers",
+            "database": "sandbox",
+            "username": "data_engineer"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5431,
+            "driver": "PostgreSQL",
+            "name": "A_Sandbox",
+            "group": "Admin",
             "database": "sandbox",
             "username": "admin"
         }

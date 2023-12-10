@@ -2,8 +2,8 @@
     "Servers": {
       "1": {
         "Name": "Platform",
-        "Port": 5431,
-        "Username": "admin",
+        "Port": 5432,
+        "Username": "data_engineer",
         "Host": "postgres",
         "Group": "Servers",
         "SSLMode": "prefer",

@@ -40,5 +40,8 @@ cd  # to move between directories, use ".." to go parent
 ls -a # show all directories and files
 sudo systemctl restart <service> # to restart service
 
+psql -h postgres -d sandbox -U admin # to connect to postgres server in host postgres, database sandbox, user admin
 
+6. postgres
+ALTER USER <user_name> WITH ENCRYPTED PASSWORD '<new_password>'; # To change pw for user
 
