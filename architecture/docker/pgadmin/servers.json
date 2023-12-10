@@ -1,0 +1,14 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "Platform",
+        "Port": 5432,
+        "Username": "data_engineer",
+        "Host": "postgres",
+        "Group": "Servers",
+        "SSLMode": "prefer",
+        "MaintenanceDB": "sandbox",
+        "Comment": "Data platform"
+      }
+    }
+  }
