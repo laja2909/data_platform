@@ -9,6 +9,7 @@
 5. Change that only top 5 rows are always returned if select statement is used. Not all rows!
 
 6. start implementing some api functions with python and search for first 
+7. change folder to database.ini inside tools/config or something like this. Make sure python scripts are able to run this afterwards.
 
 
 #check
