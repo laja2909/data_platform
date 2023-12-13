@@ -1,0 +1,5 @@
+Start implementing some api functions with python and search for first 
+
+
+#check
+https://www.postgresqltutorial.com/postgresql-python/connect/
