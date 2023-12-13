@@ -8,8 +8,8 @@ class Database:
         filename -> filename from which database parameters are fetched
         section -> Section of the file that corresponds to specific database connection settings.
     """
-    def __init__(self,filename,section):
-        self.db_params = fetch_db_params(filename,section)
+    def __init__(self,filename,connection):
+        self.db_params = fetch_db_params(filename,connection)
         
     def connect(self):
         """
@@ -25,7 +25,7 @@ class Database:
             #port=self.port
             #)
             self.cursor = self.connection.cursor()
-            #print("Connected to the database")
+            print("Connected to the database")
         except (Exception, psycopg2.Error) as error:
             print("Error while connecting to PostgreSQL:", error)
 
@@ -34,18 +34,23 @@ class Database:
         if self.connection:
             self.cursor.close()
             self.connection.close()
-            #print("Disconnected from the database")
+            print("Disconnected from the database")
         else:
             print("Connection not found.")
 
     def execute_query(self, query, params=None):
         try:
             self.cursor.execute(query, params)
-            self.connection.commit()
-            #print("Query executed successfully")
 
-            #print(self.cursor.fetchall())
-        except (Exception, psycopg2.Error) as error:
+            try:
+                results = self.cursor.fetchmany(10)
+                print(results)
+            except psycopg2.ProgrammingError:
+                print("Query returned 0 rows.")
+            
+            self.connection.commit()
+            
+        except psycopg2.Error as error:
             print("Error executing query:", error)
 
     def execute_query_in_file(self, filename, params=None):
@@ -56,7 +61,7 @@ class Database:
             self.cursor.execute(sql_queries)
 
             try:
-                results = self.cursor.fetchall()
+                results = self.cursor.fetchmany(10)
                 print(results)
             except psycopg2.ProgrammingError:
                 print("Query returned 0 rows.")
@@ -65,40 +70,14 @@ class Database:
             
         except psycopg2.Error as error:
             print("Error executing query:", error)
+    
+    def execute_query_full_process(self,query,params=None):
+        self.connect()
+        self.execute_query(query,params)
+        self.disconnect()
 
-    def fetch_data(self, query, params=None):
-        try:
-            self.cursor.execute(query, params)
-            result = self.cursor.fetchall()
-            #print("Fetched data successfully")
-            print(result)
-            return result
-        except (Exception, psycopg2.Error) as error:
-            print("Error fetching data:", error)
-            return None
+    def execute_query_in_file_full_process(self,filename):
+        self.connect()
+        self.execute_query_in_file(filename)
+        self.disconnect()
         
-
-
-"""
-    def connect(self):
-        environment = self.env
-        valid_environments = ['dev','test','prod']
-        if environment in valid_environments:
-            dbname_full = self.dbname + '_' + environment
-        else:
-            print("No valid environment defined!")
-            sys.exit()
-
-        try:
-            self.connection = psycopg2.connect(
-                dbname=dbname_full,
-                user=self.user,
-                password=self.password,
-                host=self.host,
-                port=self.port
-            )
-            self.cursor = self.connection.cursor()
-            print("Connected to the database")
-        except (Exception, psycopg2.Error) as error:
-            print("Error while connecting to PostgreSQL:", error)
-"""

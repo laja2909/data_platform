@@ -1,15 +1,4 @@
-1. Add execute query function to database class. Check
---function should be able to run single query and return the result
-3. Function should also not take only single query but be able to run sql file! Check
-
-2. Then add another function which
---1) connects to database, 2) runs a query, b) disconnects from database; This still needs to be done.
-
-4. Modify exceute query function in a way that it can fetch also rows. check excecute file function as an example
-5. Change that only top 5 rows are always returned if select statement is used. Not all rows!
-
-6. start implementing some api functions with python and search for first 
-7. change folder to database.ini inside tools/config or something like this. Make sure python scripts are able to run this afterwards.
+Start implementing some api functions with python and search for first 
 
 
 #check
